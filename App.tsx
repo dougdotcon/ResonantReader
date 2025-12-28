@@ -22,10 +22,10 @@ export default function App() {
         });
       }
     };
-    
+
     window.addEventListener('resize', handleResize);
     handleResize();
-    
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -43,23 +43,24 @@ export default function App() {
 
   return (
     <div className="flex h-screen w-screen bg-[#050505] text-white overflow-hidden relative selection:bg-cyan-500/30">
-      
+
       {/* Background Grid */}
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none" 
-           style={{
-             backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)`,
-             backgroundSize: '40px 40px'
-           }}>
+      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)`,
+          backgroundSize: '40px 40px'
+        }}>
       </div>
 
       {/* Main Graph Area */}
       <div className="relative flex-1 h-full" ref={graphContainerRef}>
         <HUD resonance={selectedNodeId ? 98 : 45} />
-        
+
         {fileLoaded ? (
-          <CortexGraph 
+          <CortexGraph
             data={INITIAL_GRAPH_DATA}
             onNodeClick={handleNodeClick}
+            selectedNodeId={selectedNodeId}
             width={dimensions.width}
             height={dimensions.height}
           />
@@ -75,7 +76,7 @@ export default function App() {
                 <FileText className="w-16 h-16 text-neutral-500 mx-auto mb-4" />
                 <h1 className="text-2xl font-mono text-white mb-2">RESONANT READER</h1>
                 <p className="text-neutral-400 mb-6">Upload a document to visualize its semantic topology.</p>
-                <button 
+                <button
                   onClick={handleFileUpload}
                   className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-sm flex items-center gap-2 mx-auto transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]"
                 >
@@ -91,7 +92,7 @@ export default function App() {
       {/* Sidebar - only visible if file loaded */}
       {fileLoaded && (
         <div className="w-[450px] relative z-10 shadow-2xl">
-           <ReaderPanel sections={BOOK_CONTENT} selectedNodeId={selectedNodeId} />
+          <ReaderPanel sections={BOOK_CONTENT} selectedNodeId={selectedNodeId} />
         </div>
       )}
 
